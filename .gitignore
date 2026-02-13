@@ -1,0 +1,53 @@
+# Environment and secrets
+.env
+.env.local
+.env.production
+.env.postgres
+*.key
+*.pem
+*.crt
+*.p12
+
+# Certificates directory
+certs/
+backend/certs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Database files and dumps
+*.sql
+*.sqlite3
+*.db
+
+# Uploaded files (may contain personal data)
+backend/uploads/resumes/*
+!backend/uploads/resumes/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+data/
+pgdata/
+
+# Logs
+*.log

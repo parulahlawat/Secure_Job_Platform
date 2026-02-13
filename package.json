@@ -1,0 +1,20 @@
+{
+  "name": "fcs",
+  "displayName": "FCS - Secure Job Portal",
+  "description": "Zero-Knowledge End-to-End Encrypted Job Portal",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "FCS Team",
+  "keywords": [
+    "job",
+    "portal",
+    "security",
+    "encryption",
+    "e2ee",
+    "zero-knowledge"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/fcs.git"
+  }
+}
