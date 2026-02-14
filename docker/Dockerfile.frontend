@@ -1,0 +1,21 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy application
+COPY src ./src
+COPY public ./public
+COPY vite.config.js .
+COPY postcss.config.js .
+COPY tailwind.config.js .
+COPY index.html .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
