@@ -1,0 +1,156 @@
+.sender-avatar {
+  background: #3b82f6 !important;
+  color: #fff !important;
+}
+.receiver-avatar {
+  background: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+.chat-message-row {
+  display: flex !important;
+  flex-direction: row !important;
+  min-width: 0;
+}
+.chat-message-row.sent {
+  justify-content: flex-end !important;
+}
+.chat-message-row.received {
+  justify-content: flex-start !important;
+}
+.chat-message-row {
+  min-width: 0;
+  flex-direction: row !important;
+}
+.chat-message-row.sent {
+  /* background removed */
+}
+.chat-message-row.received {
+  /* background removed */
+}
+.chat-message-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+.chat-message-row.sent {
+  justify-content: flex-end !important;
+}
+.chat-message-row.received {
+  justify-content: flex-start !important;
+}
+.chat-bubble {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  max-width: 70%;
+  word-break: break-word;
+  white-space: pre-line;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.sent-bubble {
+  background: #3b82f6;
+  color: #fff;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 1rem;
+}
+.received-bubble {
+  background: #e5e7eb;
+  color: #1f2937;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 1rem;
+}
+/* Ensure chat message row and bubble styles apply in Messages page too */
+.chat-message-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+.chat-message-row.sent {
+  justify-content: flex-end;
+}
+.chat-message-row.received {
+  justify-content: flex-start;
+}
+.chat-bubble {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  max-width: 70%;
+  word-break: break-word;
+  white-space: pre-line;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.sent-bubble {
+  background: #3b82f6;
+  color: #fff;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 1rem;
+}
+.received-bubble {
+  background: #e5e7eb;
+  color: #1f2937;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 1rem;
+}
+/* Chat message row alignment */
+.chat-message-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+.chat-message-row.sent {
+  justify-content: flex-end;
+}
+.chat-message-row.received {
+  justify-content: flex-start;
+}
+
+/* Chat bubble styles */
+.chat-bubble {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  max-width: 70%;
+  word-break: break-word;
+  white-space: pre-line;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.sent-bubble {
+  background: #3b82f6;
+  color: #fff;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 1rem;
+}
+.received-bubble {
+  background: #e5e7eb;
+  color: #1f2937;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 1rem;
+}
+/* Ensure chat messages stack vertically and take full width */
+.chat-messages-list > li {
+  width: 100% !important;
+  display: flex !important;
+}
+/* Fallback for chat message stacking */
+.chat-messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #3b82f6;
+  --secondary: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+body {
+  @apply font-sans antialiased;
+}
