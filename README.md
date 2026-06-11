@@ -1,136 +1,119 @@
-<<<<<<< HEAD
-# FCS - Future Career Solutions
-## Secure Job Portal Platform
+# SecureConnect — Secure Job Search & Professional Networking Platform
 
-A privacy-first job portal with end-to-end encryption, zero-knowledge architecture, and enterprise security.
+A full-stack secure job portal built with **FastAPI**, **React**, and **PostgreSQL**, featuring end-to-end encrypted messaging, encrypted resume storage, and tamper-evident audit logging.
 
-### Architecture
+> Built for CSE 345/545: Foundations of Computer Security | IIIT Delhi | March 2026
 
-```
-User Browser (React Frontend - HTTPS)
-    ↓ HTTPS (TLS)
-NGINX (Reverse Proxy, Rate Limiting, Secure Headers)
-    ↓
-FastAPI Backend (Python)
-    ├── Auth & Security (Login, OTP, RBAC)
-    ├── Profile & Job Management
-    ├── E2EE Messaging
-    ├── Resume Security (Encrypted Storage)
-    └── Audit & Logging
-    ↓
-    ├── PostgreSQL Database
-    └── Encrypted File Store
-```
+---
 
-### Key Features
+## Screenshots
 
-- **Zero-Knowledge Architecture**: Server can never access user data
-- **End-to-End Encryption**: Messages encrypted on client, decrypted on client
-- **Email-based OTP**: Secure authentication without passwords
-- **Role-Based Access Control**: User / Recruiter / Admin roles
-- **Encrypted Resume Storage**: Resumes encrypted with AES-256
-- **Hash-Chained Audit Logs**: Tamper-evident event logging
-- **Rate Limiting**: NGINX protection against abuse
+### E2EE Group Messaging
+End-to-end encrypted group chat using NaCl (Curve25519 + XSalsa20 + Poly1305). The server stores only ciphertext — zero-knowledge architecture.
 
-### Tech Stack
+![E2EE Messaging](screenshots/messaging.png)
 
-- **Frontend**: React, TailwindCSS, Socket.io, NaCl (encryption)
-- **Backend**: FastAPI (Python), SQLAlchemy, Pydantic
-- **Database**: PostgreSQL
-- **Cache**: Redis (optional)
-- **File Storage**: Encrypted local storage or S3
-- **Reverse Proxy**: NGINX with TLS
-- **Containerization**: Docker & Docker Compose
+### Company Admin Dashboard
+Recruiters can manage job listings, view applicants, and update application status.
 
-### Getting Started
+![Company Dashboard](screenshots/company_dashboard.png)
 
-#### Backend Setup
+### Job Search & Application Tracking
+Job seekers can search, filter, and apply to jobs with real-time status tracking.
+
+![Job Search](screenshots/Job_apply_page%20for%20users.png)
+
+### Login Page
+OTP-based passwordless authentication with virtual keyboard for keylogger protection.
+
+![Login](screenshots/Login%20page.png)
+
+### User Profile with Privacy Controls
+Per-field privacy settings (public, connections-only, private) with application status tracking.
+
+![Profile](screenshots/profile_management.png)
+
+### Encrypted Resume Upload
+AES-256-GCM encryption with RSA-2048 digital signatures for non-repudiation.
+
+![Resume Upload](screenshots/Resume%20upload.png)
+
+---
+
+## Tech Stack
+
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| Frontend | React 18, Vite, TailwindCSS, Zustand | SPA with client-side E2EE |
+| Backend | FastAPI (Python 3.11), Pydantic, SQLAlchemy | REST API with RBAC |
+| Database | PostgreSQL 16 | ACID-compliant data store |
+| Encryption | TweetNaCl.js, Python cryptography | E2EE messaging + AES-256-GCM |
+| Infrastructure | NGINX, Docker Compose | TLS termination, rate limiting |
+
+---
+
+## Security Architecture
+
+**Layer 1 — Network:** HTTPS/TLS 1.3 via NGINX, HSTS, CSP, rate limiting (5 req/min on auth)
+
+**Layer 2 — Authentication:** OTP-based passwordless login (PBKDF2, 100K iterations), JWT (httpOnly cookies, 30-min access / 7-day refresh), virtual keyboard
+
+**Layer 3 — Application:** Pydantic validation, SQLAlchemy ORM (parameterized queries), React auto-escaping, CSRF protection
+
+**Layer 4 — Data:** AES-256-GCM resume encryption + RSA-2048 signatures, NaCl E2EE messaging (zero-knowledge), per-field profile privacy
+
+**Layer 5 — Accountability:** SHA-256 hash-chained audit logs, IP/user-agent tracking, non-repudiation via PKI
+
+---
+
+## Features
+
+- **OTP Authentication** — Passwordless login with PBKDF2 hashing, virtual keyboard, 3-attempt limit
+- **JWT Sessions** — httpOnly secure cookies, 30-min access + 7-day refresh tokens, RBAC (User/Recruiter/Admin)
+- **E2EE Messaging** — NaCl encryption (Curve25519 + XSalsa20 + Poly1305), 1-to-1 and group chat, zero-knowledge server
+- **Resume Encryption** — AES-256-GCM at rest, RSA-2048 digital signatures, RBAC-enforced download with audit logging
+- **Job Management** — Post, search, apply, track applications (Applied → Reviewed → Interviewed → Offered)
+- **Profile Privacy** — Per-field controls (public/connections/private), API-level filtering
+- **Audit Logs** — SHA-256 hash-chained entries, tamper detection, chain verification endpoint
+
+---
+
+## Setup
+
 ```bash
+# Clone
+git clone https://github.com/parulahlawat/Secure_Job_Platform.git
+cd Secure_Job_Platform
+
+# Generate TLS certificates
+bash generate-certs.sh
+
+# Backend
 cd backend
-python -m venv venv
-source venv/bin/activate  # macOS/Linux
+cp .env.example .env
 pip install -r requirements.txt
-python -m uvicorn app.main:app --reload
-```
+uvicorn app.main:app --reload --port 8000
 
-#### Frontend Setup
-```bash
-cd frontend
+# Frontend
+cd ../frontend
 npm install
-npm start
+npm run dev
 ```
 
-#### Database Setup
-```bash
-# PostgreSQL must be running
-createdb fcs_db
-python backend/app/db/init_db.py
-```
+---
 
-### Project Structure
+## OWASP Top 10 Coverage
 
-```
-FCS/
-├── backend/
-│   ├── app/
-│   │   ├── modules/
-│   │   │   ├── auth/          # Authentication & Security
-│   │   │   ├── profiles/      # User & Company Profiles
-│   │   │   ├── jobs/          # Job Postings & Applications
-│   │   │   ├── messaging/     # E2EE Messaging
-│   │   │   ├── resume/        # Encrypted Resume Storage
-│   │   │   └── audit/         # Audit Logging
-│   │   ├── core/              # Shared utilities & config
-│   │   ├── db/                # Database models & migrations
-│   │   └── main.py            # FastAPI app entry
-│   ├── requirements.txt
-│   └── .env
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── utils/
-│   │   └── App.jsx
-│   ├── public/
-│   └── package.json
-├── nginx/
-│   └── nginx.conf             # Reverse proxy config
-├── docker/
-│   ├── docker-compose.yml
-│   ├── Dockerfile.backend
-│   └── Dockerfile.frontend
-└── README.md
-```
+| # | Vulnerability | Defense |
+|---|--------------|---------|
+| A01 | Broken Access Control | RBAC + per-field privacy |
+| A02 | Cryptographic Failures | AES-256-GCM, NaCl E2EE, TLS 1.3 |
+| A03 | Injection | SQLAlchemy parameterized queries |
+| A05 | Security Misconfiguration | Secure headers, .env separation |
+| A07 | Auth Failures | OTP + JWT + rate limiting |
+| A08 | Integrity Failures | Hash-chained logs, RSA signatures |
+| A09 | Logging Failures | Comprehensive audit module |
 
-### Security Considerations
+---
 
-- All data encrypted at rest and in transit
-- HTTPS/TLS enforced
-- CORS restricted to frontend domain
-- CSRF tokens on state-changing requests
-- Rate limiting on all endpoints
-- SQL injection prevention via ORM
-- XSS protection via React
-- HSTS enabled
-- Secure headers configured
-
-### Development
-
-```bash
-# Start all services
-docker-compose up
-
-# Backend tests
-cd backend && pytest
-
-# Frontend tests
-cd frontend && npm test
-```
-
-### License
-
-MIT
-=======
-# Secure-Job-Platform
->>>>>>> 05f9724bfe99daf7f35a1b77c1c021223adc6b27
+*Developed by Parul Ahlawat — CSE 345/545, IIIT Delhi*
