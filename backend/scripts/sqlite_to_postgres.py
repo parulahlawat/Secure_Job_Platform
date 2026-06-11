@@ -7,8 +7,8 @@ import os
 SQLITE_DB = os.path.abspath(os.path.join(os.path.dirname(__file__), '../fcs.db'))
 PG_CONN = {
     'dbname': 'fcs',
-    'user': 'fcsuser',
-    'password': 'fcspassword',
+    'user': os.getenv('DB_USER', 'fcsuser'),
+    'password': os.getenv('DB_PASSWORD', 'changeme'),
     'host': 'localhost',
     'port': 5432
 }
